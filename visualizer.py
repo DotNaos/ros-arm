@@ -29,18 +29,16 @@ class Visualizer:
     glTranslatef(0.0,0.0, -5)
 
   def run(self):
-      # while True:
-      #   for event in pygame.event.get():
-      #       if event.type == pygame.QUIT:
-      #           pygame.quit()
-      #           quit()
+      for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+              pygame.quit()
+              quit()
 
-      #   # glRotatef(1, 3, 1, 1)
-      #   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-      #   self.render()
-      #   pygame.display.flip()
-      #   pygame.time.wait(10)
-    pass
+      # glRotatef(1, 3, 1, 1)
+      glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+      self.render()
+      pygame.display.flip()
+      pygame.time.wait(10)
 
   def update(self, message : json):
     self.data = json.loads(message)

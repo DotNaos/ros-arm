@@ -16,7 +16,7 @@ async def run_visualizer():
         await asyncio.sleep(0)  # Yield control to the event loop
 
 async def main():
-    start_server = websockets.serve(echo, "127.0.0.1", 8765)
+    start_server = websockets.serve(echo, "0.0.0.0", 8765)
     public_url = ngrok.connect(8765, "http", hostname="summary-amazing-tetra.ngrok-free.app")
     print(public_url)
 
