@@ -1,41 +1,72 @@
 import json
-import matplotlib.pyplot as plt
+import pygame
+from pygame.locals import *
+
+from OpenGL.GL import *
+from OpenGL.GLU import *
+
 import numpy as np
-import time
+
 
 
 class Visualizer:
   def __init__(self):
-    self.data = {}
-    self.fig = plt.figure()
-    self.ax = plt.axes(projection="3d")
-    self.graph = self.ax.scatter([], [], [], c="r", marker="o")
+    # Create a empty array in shape:
+    # [
+    #   [0. 0. 0.]
+    #   [0. 0. 0.]
+    #   ...
+    # ]
+    self.vertecies = np.zeros((21, 3))
+
+    print(self.vertecies)
+    pygame.init()
+    display = (800,600)
+    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+
+    glTranslatef(0.0,0.0, -5)
+
+  def run(self):
+      # while True:
+      #   for event in pygame.event.get():
+      #       if event.type == pygame.QUIT:
+      #           pygame.quit()
+      #           quit()
+
+      #   # glRotatef(1, 3, 1, 1)
+      #   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+      #   self.render()
+      #   pygame.display.flip()
+      #   pygame.time.wait(10)
+    pass
 
   def update(self, message : json):
     self.data = json.loads(message)
 
-    self.visualize()
+    # Data is a dictionary of the form:
+    #   {"landmarks":[[
+    #   {"x":0.0,"y":0.0,"z":0.0},
+    #   ]], "worldLandmarks":[], "handednesses":[], "handedness":[]}
 
-  # Data is a dictionary of the form:
-  #   {"landmarks":[[
-  #   {"x":0.0,"y":0.0,"z":0.0},
-  #   ]], "worldLandmarks":[], "handednesses":[], "handedness":[]}
-
-  # Visualize the data in a 3D plot
-  #
-  def visualize(self):
-    landmarks = self.data["landmarks"]
-    if landmarks == []:
+    if (self.data["landmarks"] == []):
       return
 
-    x = []
-    y = []
-    z = []
-    for landmark in landmarks[0]:
-      x.append(landmark["x"])
-      y.append(landmark["y"])
-      z.append(landmark["z"])
-    self.graph._offsets3d = (x, y, z)
-    plt.draw()
-    plt.pause(0.001)
+    for i in range(len(self.data["landmarks"][0])):
+      for j in range(3):
+        key = 'x' if j == 0 else 'y' if j == 1 else 'z'
+        self.vertecies[i][j] = self.data["landmarks"][0][i][key]
+
+    print(self.vertecies)
+
+
+
+  def render(self):
+    glBegin(GL_POINTS)
+    for vertex in self.vertecies:
+        glVertex3fv(vertex)
+    glEnd()
+
+
 
