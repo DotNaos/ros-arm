@@ -20,7 +20,6 @@ async def main():
     public_url = ngrok.connect(8765, "http", hostname="summary-amazing-tetra.ngrok-free.app")
     print(public_url)
 
-
     # Create the visualizer task
     visualizer_task = asyncio.create_task(run_visualizer())
 
