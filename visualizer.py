@@ -19,6 +19,16 @@ class Visualizer:
     # ]
     self.vertecies = np.zeros((21, 3))
 
+    #Init hand / fingers
+    self.fingers = np.array([
+       [0, 1, 2, 3, 4],
+       [0, 5, 6, 7, 8],
+       [9, 9, 10, 11, 12],
+       [13, 13, 14, 15, 16],
+       [0, 17, 18, 19, 20],
+       [2, 5, 9, 13, 17]
+    ])
+
     print(self.vertecies)
     pygame.init()
     display = (800,600)
@@ -27,6 +37,7 @@ class Visualizer:
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     glTranslatef(0.0,0.0, -5)
+    glScalef(2, -2, 2)
 
   def run(self):
       for event in pygame.event.get():
@@ -61,9 +72,21 @@ class Visualizer:
 
 
   def render(self):
+    # Draw hand-knuckles
+
     glBegin(GL_POINTS)
     for vertex in self.vertecies:
         glVertex3fv(vertex)
+    glEnd()
+
+    # Draw fingers
+    glBegin(GL_LINES)
+    for finger in self.fingers:
+       temp = 0
+       for knuckle in finger:
+          glVertex3fv(self.vertecies[temp])
+          glVertex3fv(self.vertecies[knuckle])
+          temp = knuckle
     glEnd()
 
 
