@@ -2,7 +2,7 @@ import asyncio
 import websockets
 from pyngrok import ngrok
 from visualizer import Visualizer
-
+from motor import Motor_control
 
 
 class Server:
@@ -10,6 +10,7 @@ class Server:
         self.ip = ip
         self.port = port
         self.visualize = visualize
+        self.motor_control = Motor_control()
 
     def start(self):
         asyncio.get_event_loop().run_until_complete(self.run())
@@ -33,6 +34,7 @@ class Server:
     async def echo(self, websocket, path):
         async for message in websocket:
             # await websocket.send(message)
+            self.motor_control.update(message)
             if self.visualize:
                 self.visualizer.update(message)
 
