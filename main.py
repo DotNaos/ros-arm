@@ -6,9 +6,9 @@ def main(argv):
   visualize = False
 
   try:
-    opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+    opts, args = getopt.getopt(argv,"vh",["visualize", "help"])
   except getopt.GetoptError:
-    print ('Visualize Data\nmain.py -v')
+    print ('Optionerror')
     sys.exit(2)
   for opt, arg in opts:
     if opt in ("-v", "--visualize"):

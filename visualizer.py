@@ -42,7 +42,6 @@ class Visualizer:
         [0,1,1],
         ])
 
-        print(self.vertecies)
         pygame.init()
         display = (800, 600)
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -85,12 +84,12 @@ class Visualizer:
                   key = 'x' if j == 0 else 'y' if j == 1 else 'z'
                   self.vertecies[n][i][j] = self.data["landmarks"][n][i][key]
 
-        print(self.vertecies)
+        # print(self.vertecies)
 
     def render(self):
         # Draw hand-knuckles
         for vertecies in self.vertecies:
-          print(vertecies)
+        #   print(vertecies)
 
           glColor3f(1.0, 0.0, 0.0)  # Set color to red
           for vertex in vertecies:
