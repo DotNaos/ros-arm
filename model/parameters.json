@@ -1,0 +1,20 @@
+{
+  "NEMA17": {
+    "SIZE_X": 48,
+    "SIZE_Y": 42.3,
+    "SIZE_Z": 42.3,
+    "SHAFT_LENGTH": 24,
+    "SHAFT_D": 5
+  },
+
+  "Bearing": {
+    "HEIGHT": 7,
+    "ID": 8,
+    "OD": 22
+  },
+
+  "Construction": {
+    "FLOOR": 8,
+    "TOLERANCE": 0.25
+  }
+}
