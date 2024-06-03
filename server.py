@@ -4,15 +4,22 @@ import threading
 import websockets
 from pyngrok import ngrok
 from control import Control
+import RPi.GPIO as GPIO
 
 class Server:
     def __init__(self):
-        self.control = Control()
-        self.control_thread = threading.Thread(target=self.control.loop, daemon=True)
-        self.control_thread.start()
+        try:
 
-        asyncio.get_event_loop().run_until_complete(self.run())
-        asyncio.get_event_loop().run_forever()
+            self.control = Control()
+            self.control_thread = threading.Thread(target=self.control.loop, daemon=True)
+            self.control_thread.start()
+
+            asyncio.get_event_loop().run_until_complete(self.run())
+            asyncio.get_event_loop().run_forever()
+
+        except KeyboardInterrupt:
+            GPIO.cleanup()
+            print("\n\n\nSTOPPING PROGRAMM AND CLEANUP...\n\n\n")
 
 
     async def run(self, ip="0.0.0.0", port=8765):
@@ -31,7 +38,6 @@ class Server:
 
             # print(message)
 
-
             # Empty data
             if not data["landmarks"]:
                 # print ("No data")
@@ -39,7 +45,6 @@ class Server:
 
             if len(data["handednesses"]) == 2: # If there are two hands
                 continue
-
 
             hand = "Right" # Default to right hand (IMPORTANT: First letter must be capital)
 
